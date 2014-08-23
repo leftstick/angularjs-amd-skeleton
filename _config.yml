@@ -1,0 +1,19 @@
+# Site settings
+encoding: "utf-8"
+title: angularjs-requirejs-skeleton
+email: leftstick@qq.com
+description: A seed project can be forked for web-developer. You would learn how `angularjs` used for organizing complicated application
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://leftstick.github.io/angularjs-requirejs-skeleton/"
+
+github_username:  leftstick
+
+# Build settings
+markdown: kramdown
+kramdown:
+  input: GFM
+
+highlighter: pygments
+
+redcarpet:
+  extensions: []
