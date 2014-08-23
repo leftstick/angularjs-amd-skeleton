@@ -14,7 +14,8 @@ kramdown:
   input: GFM
   auto_id_stripping: true
 
-highlighter: rouge/pygments
+highlighter: pygments
+pygments: true
 
 redcarpet:
   extensions: ["fenced_code_blocks"]
