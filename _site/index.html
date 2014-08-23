@@ -100,27 +100,52 @@
   <li>
     <p>configuration(<code>main.js</code>)</p>
 
-    <pre><code> (function(require) {
+    <p>(function(require) {</p>
 
-     var baseUrl = '/';
+    <pre><code> var baseUrl = '/';
 
-     require.config({
-         baseUrl: baseUrl,
-         paths: {
-             //configure the path
-         }
-         //anything else, place it here if you need
-     });
+ require.config({
+     baseUrl: baseUrl,
+     paths: {
+         //configure the path
+     }
+     //anything else, place it here if you need
+ });
 
-     var preloads = [];//place your preloads path ids here
+ var preloads = [];//place your preloads path ids here
 
-     //Load all preload dependencies
-     require(preloads, function() {
-         require(['js/boot']);
-     });
-
- }(require));
+ //Load all preload dependencies
+ require(preloads, function() {
+     require(['js/boot']);
+ });
 </code></pre>
+
+    <p>}(require));</p>
+  </li>
+  <li>
+    <p>manually start up</p>
+
+    <p>(function(require) {</p>
+
+    <pre><code> var baseUrl = '/';
+
+ require.config({
+     baseUrl: baseUrl,
+     paths: {
+         //configure the path
+     }
+     //anything else, place it here if you need
+ });
+
+ var preloads = [];//place your preloads path ids here
+
+ //Load all preload dependencies
+ require(preloads, function() {
+     require(['js/boot']);
+ });
+</code></pre>
+
+    <p>}(require));</p>
   </li>
 </ol>
 
