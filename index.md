@@ -72,6 +72,7 @@ Let's start going through the solution:
         });
 
     }(require));
+    
 2. manually start up
 
     (function(require) {
