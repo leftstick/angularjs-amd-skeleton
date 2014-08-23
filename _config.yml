@@ -11,9 +11,10 @@ github_username:  leftstick
 # Build settings
 markdown: kramdown
 kramdown:
+  input: GFM
   auto_id_stripping: true
 
 highlighter: pygments
 
 redcarpet:
-  extensions: []
+  extensions: ["fenced_code_blocks"]

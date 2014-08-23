@@ -52,6 +52,7 @@ Let's start going through the solution:
 
 1. configuration(`main.js`)
 
+```JavaScript
     (function(require) {
 
         var baseUrl = '/';
@@ -72,9 +73,11 @@ Let's start going through the solution:
         });
 
     }(require));
-    
+```
+
 2. manually start up
 
+```JavaScript
     (function(require) {
 
         var baseUrl = '/';
@@ -95,3 +98,4 @@ Let's start going through the solution:
         });
 
     }(require));
+```
