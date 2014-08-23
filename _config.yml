@@ -12,7 +12,7 @@ github_username:  leftstick
 markdown: kramdown
 kramdown:
   input: GFM
-  auto_ids: true
+  auto_id_stripping: true
 
 highlighter: pygments
 

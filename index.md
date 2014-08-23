@@ -2,12 +2,12 @@
 layout: default
 ---
 
-## [Prerequisites](#prereq) ##
+## [Prerequisites](#prerequisites) ##
 
 - [![](assets/images/requirejs.png)](http://www.requirejs.org/)
 - [![](assets/images/angularjs.png)](https://angularjs.org/)
 
-## [Architecture](#arch) ##
+## [Architecture](#architecture) ##
 
     |root
     |--------img/
@@ -32,7 +32,7 @@ layout: default
 - **js-features-common:** common stuff would be used for most features should be placed here
 - **js-features-feaure:** each feature should contain the `controller`, `service`, `directive`, `route` and even `i18n` assets
 
-## [Dependency Injection](#di) ##
+## [Dependency Injection](#dependency-injection) ##
 
 ### [requirejs](#requirejs) ###
 
