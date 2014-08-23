@@ -89,6 +89,41 @@
   <li>instance would be injdected as dependency</li>
 </ul>
 
+<h2 id="what-should-we-do-for-those-different-di"><a href="#what-should-we-do-for-those-different-di?">What should we do for those different DI?</a></h2>
+
+<p>It’s simple, we just use <code>requirejs</code> organize all the files and <code>angularjs</code> only care about the<br />
+ instances.</p>
+
+<p>Let’s start going through the solution:</p>
+
+<ol>
+  <li>
+    <p>configuration(<code>main.js</code>)</p>
+
+    <pre><code> (function(require) {
+
+     var baseUrl = '/';
+
+     require.config({
+         baseUrl: baseUrl,
+         paths: {
+             //configure the path
+         }
+         //anything else, place it here if you need
+     });
+
+     var preloads = [];//place your preloads path ids here
+
+     //Load all preload dependencies
+     require(preloads, function() {
+         require(['js/boot']);
+     });
+
+ }(require));
+</code></pre>
+  </li>
+</ol>
+
         </section>
 
         <aside id="sidebar">

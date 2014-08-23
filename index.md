@@ -42,3 +42,33 @@ layout: default
 ### [angularjs](#angularjs) ###
 
 - instance would be injdected as dependency
+
+## [What should we do for those different DI?](#what-should-we-do-for-those-different-di?) ##
+
+It's simple, we just use `requirejs` organize all the files and `angularjs` only care about the
+ instances.
+
+Let's start going through the solution:
+
+1. configuration(`main.js`)
+
+        (function(require) {
+
+            var baseUrl = '/';
+
+            require.config({
+                baseUrl: baseUrl,
+                paths: {
+                    //configure the path
+                }
+                //anything else, place it here if you need
+            });
+
+            var preloads = [];//place your preloads path ids here
+
+            //Load all preload dependencies
+            require(preloads, function() {
+                require(['js/boot']);
+            });
+
+        }(require));
