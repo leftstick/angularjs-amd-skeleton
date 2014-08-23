@@ -4,8 +4,8 @@ layout: default
 
 ## [Prerequisites](#prereq) ##
 
-- [![](/assets/images/requirejs.png)](http://www.requirejs.org/)
-- [![](/assets/images/angularjs.png)](https://angularjs.org/)
+- [![](assets/images/requirejs.png)](http://www.requirejs.org/)
+- [![](assets/images/angularjs.png)](https://angularjs.org/)
 
 ## [Architecture](#arch) ##
 
