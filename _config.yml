@@ -11,9 +11,6 @@ git_repository: https://github.com/leftstick/angularjs-requirejs-skeleton
 
 # Build settings
 markdown: redcarpet
-kramdown:
-  input: GFM
-  auto_id_stripping: true
 
 highlighter: pygments
 
