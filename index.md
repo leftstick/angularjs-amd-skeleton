@@ -52,7 +52,7 @@ Let's start going through the solution:
 
 1. configuration(`main.js`)
 
-```JavaScript
+{% highlight JavaScript %}
     (function(require) {
 
         var baseUrl = '/';
@@ -73,7 +73,7 @@ Let's start going through the solution:
         });
 
     }(require));
-```
+{% endhighlight %}
 
 2. manually start up
 
