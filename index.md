@@ -55,50 +55,49 @@ Let's start going through the solution:
 
 1. configuration(`main.js`)
 
-{% highlight JavaScript %}
-(function(require) {
+    ```JavaScript
+    (function(require) {
 
-    var baseUrl = '/';
+        var baseUrl = '/';
 
-    require.config({
-        baseUrl: baseUrl,
-        paths: {
-            //configure the path
-        }
-        //anything else, place it here if you need
-    });
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                //configure the path
+            }
+            //anything else, place it here if you need
+        });
 
-    var preloads = [];//place your preloads path ids here
+        var preloads = [];//place your preloads path ids here
 
-    //Load all preload dependencies
-    require(preloads, function() {
-        require(['js/boot']);
-    });
+        //Load all preload dependencies
+        require(preloads, function() {
+            require(['js/boot']);
+        });
 
-}(require));
-{% endhighlight %}
+    }(require));
+    ```
+2. manually start up(boot.js)
 
-2. manually start up
+    ```JavaScript
+    (function(require) {
 
-{% highlight JavaScript %}
-(function(require) {
+        var baseUrl = '/';
 
-    var baseUrl = '/';
+        require.config({
+            baseUrl: baseUrl,
+            paths: {
+                //configure the path
+            }
+            //anything else, place it here if you need
+        });
 
-    require.config({
-        baseUrl: baseUrl,
-        paths: {
-            //configure the path
-        }
-        //anything else, place it here if you need
-    });
+        var preloads = [];//place your preloads path ids here
 
-    var preloads = [];//place your preloads path ids here
+        //Load all preload dependencies
+        require(preloads, function() {
+            require(['js/boot']);
+        });
 
-    //Load all preload dependencies
-    require(preloads, function() {
-        require(['js/boot']);
-    });
-
-}(require));
-{% endhighlight %}
+    }(require));
+    ```

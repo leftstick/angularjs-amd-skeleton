@@ -10,7 +10,7 @@ github_username:  leftstick
 git_repository: https://github.com/leftstick/angularjs-requirejs-skeleton
 
 # Build settings
-markdown: kramdown
+markdown: redcarpet
 kramdown:
   input: GFM
   auto_id_stripping: true
