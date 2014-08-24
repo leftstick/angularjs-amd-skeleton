@@ -31,6 +31,9 @@ layout: default
 - **js-features:** business logic code should be placed here
 - **js-features-common:** common stuff would be used for most features should be placed here
 - **js-features-feaure:** each feature should contain the `controller`, `service`, `directive`, `route` and even `i18n` assets
+- **fw:** configurations should be placed here, and used in `boot.js`
+- **boot.js:** is responsible for organizing all the `angular` needed modules, and configure the `angular` part by using configurations in `fw` folder; And then, manually start up the application
+- **main.js:** is the main entrance of the whole application, which is also a configuration for `requirejs`. The `requirejs` related stuff such `path`, `shim` configurations should be placed here
 
 ## [Dependency Injection](#dependency-injection) ##
 
@@ -53,49 +56,49 @@ Let's start going through the solution:
 1. configuration(`main.js`)
 
 {% highlight JavaScript %}
-    (function(require) {
+(function(require) {
 
-        var baseUrl = '/';
+    var baseUrl = '/';
 
-        require.config({
-            baseUrl: baseUrl,
-            paths: {
-                //configure the path
-            }
-            //anything else, place it here if you need
-        });
+    require.config({
+        baseUrl: baseUrl,
+        paths: {
+            //configure the path
+        }
+        //anything else, place it here if you need
+    });
 
-        var preloads = [];//place your preloads path ids here
+    var preloads = [];//place your preloads path ids here
 
-        //Load all preload dependencies
-        require(preloads, function() {
-            require(['js/boot']);
-        });
+    //Load all preload dependencies
+    require(preloads, function() {
+        require(['js/boot']);
+    });
 
-    }(require));
+}(require));
 {% endhighlight %}
 
 2. manually start up
 
-```JavaScript
-    (function(require) {
+{% highlight JavaScript %}
+(function(require) {
 
-        var baseUrl = '/';
+    var baseUrl = '/';
 
-        require.config({
-            baseUrl: baseUrl,
-            paths: {
-                //configure the path
-            }
-            //anything else, place it here if you need
-        });
+    require.config({
+        baseUrl: baseUrl,
+        paths: {
+            //configure the path
+        }
+        //anything else, place it here if you need
+    });
 
-        var preloads = [];//place your preloads path ids here
+    var preloads = [];//place your preloads path ids here
 
-        //Load all preload dependencies
-        require(preloads, function() {
-            require(['js/boot']);
-        });
+    //Load all preload dependencies
+    require(preloads, function() {
+        require(['js/boot']);
+    });
 
-    }(require));
-```
+}(require));
+{% endhighlight %}
