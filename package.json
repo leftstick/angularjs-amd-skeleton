@@ -1,0 +1,20 @@
+{
+  "name": "angularjs-requirejs-skeleton",
+  "version": "1.0.0",
+  "description": "A seed project can be forked for web-developer. You would learn how `angularjs` used for organizing complicated application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/leftstick/angularjs-requirejs-skeleton.git"
+  },
+  "keywords": [
+    "seed",
+    "angularjs",
+    "requirejs"
+  ],
+  "author": "Howard.Zuo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leftstick/angularjs-requirejs-skeleton/issues"
+  },
+  "homepage": "https://github.com/leftstick/angularjs-requirejs-skeleton"
+}
