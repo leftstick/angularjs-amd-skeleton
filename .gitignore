@@ -9,3 +9,6 @@ bower_components
 
 #css
 css/
+
+#build
+build/
