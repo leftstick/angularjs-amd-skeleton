@@ -161,38 +161,26 @@ Let's start going through the solution:
 
                 var appName = 'angularjs-requirejs-skeleton';
                 var modules = Array.prototype.slice.call(arguments, 0);
-                var features = _.filter(modules, function(module) {
-                    return angular.isObject(module) && module.name;
-                });
+
+                var features = _.chain(modules).filter(angular.isObject).filter('name').value();
 
                 //specify any external angular dependency here
-                //like 'ngRoute', 'pascalprecht.translate', 'ngTouch'
                 var ngDependencies = ['ngRoute'];
-                
-                //each feature returns a literal object include a feature name
-                //and any other attribute if needed
-                _.each(features, function(module) {
-                    if (module.name) {
-                        ngDependencies.push(module.name);
-                    }
-                });
-                
-                //config modules are the files written in special form
-                //under 'fw' folder, i will explain what the special form
-                //is in later section
-                var configModules = _.filter(modules, function(module) {
-                    return angular.isFunction(module);
-                });
 
-                //create application module
+                //each feature should return a literal object include feature name
+                ngDependencies = _.chain(features).filter('name').pluck('name').value().concat(ngDependencies);
+
+                //config modules are the files written in special form
+                //under 'fw' folder
+                var configModules = _.filter(modules, angular.isFunction);
+
                 var app = angular.module(appName, ngDependencies);
 
-                //config application with each config module
                 for (var i = 0; i < configModules.length; i++) {
                     var module = configModules[i];
                     module(features, app);
                 }
-                
+
                 //fire up the application manually in angular way
                 angular.bootstrap(document, [appName]);
 
@@ -230,14 +218,11 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
                     var routes = [];
 
                     //retrieve router from each feature
-                    _.each(features, function(feature) {
-                        if (!feature.routes) {
-                            return;
-                        }
-                        _.each(feature.routes, function(route) {
-                            routes.push(route);
-                        });
-                    });
+                    routes = _.chain(features)
+                        .filter('routes')
+                        .pluck('routes')
+                        .flatten()
+                        .value();
 
                     //config each router
                     _.each(routes, function(route) {
@@ -249,9 +234,7 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
                     });
 
                     //config default page
-                    var defaultRouter = _.find(routes, function(route) {
-                        return route.isDefault;
-                    });
+                    var defaultRouter = _.find(routes, 'isDefault');
                     if (defaultRouter) {
                         $routeProvider.otherwise({
                             redirectTo: defaultRouter.when
