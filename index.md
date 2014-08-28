@@ -460,8 +460,12 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
 }());
 ```
 
-
 > For more reading, refer to: [service][service-url]
+
+
+
+### [Now it's time to play with the real code!]({{ site.git_repository }}) ###
+
 
 
 [angularjs-url]: https://angularjs.org/

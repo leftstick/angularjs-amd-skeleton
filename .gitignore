@@ -6,3 +6,8 @@ bower_components/
 
 #css
 css/
+
+#npm
+node_modules/
+
+build/
