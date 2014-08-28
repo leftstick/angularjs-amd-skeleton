@@ -35,9 +35,7 @@
                     });
 
                     //config default page
-                    var defaultRouter = _.find(routes, function(route) {
-                        return route.isDefault;
-                    });
+                    var defaultRouter = _.find(routes, 'isDefault');
                     if (defaultRouter) {
                         $routeProvider.otherwise({
                             redirectTo: defaultRouter.when
