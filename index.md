@@ -271,7 +271,7 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
 ```
 <h2 id="feature"><a href="#feature">What is a feature?</a></h2>
 
-A feature is a [angularjs][angularjs-url] module, and should be imported in [boot.js](#bootjs), has following structure:
+A feature is a [angularjs][angularjs-url] module, it has only one mission which is responsible for it's own business logic. And should be imported in [boot.js](#bootjs), has following structure:
 
     |feature-name
     |--------controller/
@@ -298,9 +298,9 @@ A feature is a [angularjs][angularjs-url] module, and should be imported in [boo
 
 > Only `controller`, `partials`, `router` are mandatory
 
-> `common` is a special feature which may contain multiple modules in it
+> `common` is a special feature which may contain multiple modules in it. The functionality that would be used in more than one feature should be written in `common` folder
 
-Let's start writing a feature:
+<h3 id="writefeature"><a href="#writefeature">Let's start writing a feature from `main.js`</a></h3>
 
 `features/todo/main.js`
 
@@ -311,14 +311,10 @@ Let's start writing a feature:
     define([
         'features/todo/router/Routes',
         'features/todo/controller/TodoController',
-        'features/todo/service/TodolistService',
-        'features/todo/i18n/lang_en',
-        'features/todo/i18n/lang_zh'
+        'features/todo/service/TodoFactory'
     ], function(Routes,
        TodoController,
-       TodolistService,
-       lang_en,
-       lang_zh) {
+       TodoFactory) {
 
         var moduleName = 'Todo';
 
@@ -326,16 +322,14 @@ Let's start writing a feature:
 
         module.controller('TodoController', TodoController);
 
-        module.service('TodolistService', TodolistService);
+        module.service('TodoFactory', TodoFactory);
 
-        //return the module name which will be used as dependency in framework
+        //moduleName will be used in `boot.js` in order to set dependency
+        //to the main application
+        //routes will be used in `RouterConfig.js` to organize the route system
         return {
             name: moduleName,
-            router: Routes,
-            lang: {
-                'en': lang_en,
-                'zh': lang_zh
-            }
+            routes: Routes
         };
 
     });
@@ -345,9 +339,136 @@ Let's start writing a feature:
 
 ```
 
+<h3 id="writeroutes"><a href="#writeroutes">Writting a Router</a></h3>
+
+```JavaScript
+(function(define, require) {
+    'use strict';
+
+    var features = require.toUrl('features');
+
+    define([], function() {
+        return [{
+            isDefault: true,
+            when: '/',
+            controller: 'TodoController',
+            templateUrl: features + '/todo/partials/todo.html'
+        }];
+    });
+
+}(define, require));
+```
+
+> An array returned as router for this feature. You can have multiple route config returned
+
+> `isDefault` means whether to take this router as default page
+
+> For explanation of `when`, `controller`, `templateUrl`, refer to [ngRoute][ngRoute-url]
+
+
+<h3 id="writecontroller"><a href="#writecontroller">Writting a Controller</a></h3>
+
+```JavaScript
+(function(define, _) {
+    "use strict";
+
+    define([], function() {
+
+        var TodoController = function($scope, TodoFactory) {
+            $scope.title = 'TODOLIST';
+            $scope.tasks = TodoFactory.getTodoList();
+
+            $scope.$watch('tasks', function(newTasks) {
+
+                _.each($scope.tasks, function(task) {
+                    task.checked = false;
+                });
+
+            }, true);
+
+        };
+        //use in-line annotation here, for explanation, refer to: 
+        //https://docs.angularjs.org/guide/di#inline-array-annotation
+        //inline-annotation is aim to solve the minification problem
+        return ['$scope', 'TodoFactory', TodoController];
+
+    });
+
+})(define, _);
+```
+
+> The `controller` is just as it should be, explained in [ngController][ngController-url]
+
+<h3 id="writeservice"><a href="#writeservice">Writting a Service/Factory</a></h3>
+
+<h4 id="factoryrecipe"><a href="#factoryrecipe">`Factory` Recipe</a></h4>
+
+```JavaScript
+(function() {
+    'use strict';
+
+    define([], function() {
+        var factory = function() {
+
+            var getTodoList = function() {
+                return [{
+                    name: 'homework'
+                    }, {
+                    name: 'work'
+                    }, {
+                    name: 'job'
+                }];
+            };
+
+            return {
+                getTodoList: getTodoList
+            };
+
+        };
+
+        //You can also specify dependencies as inline-annotation
+        return [factory];
+    });
+}());
+```
+> For more reading, refer to: [factory][factory-url]
+
+<h4 id="servicerecipe"><a href="#servicerecipe">`Service` Recipe</a></h4>
+
+```JavaScript
+(function() {
+    'use strict';
+
+    define([], function() {
+        var service = function() {
+
+            this.getTodoList = function() {
+                return [{
+                    name: 'homework'
+                    }, {
+                    name: 'work'
+                    }, {
+                    name: 'job'
+                }];
+            };
+
+        };
+
+        //You can also specify dependencies as inline-annotation
+        return [service];
+    });
+}());
+```
+
+
+> For more reading, refer to: [service][service-url]
 
 
 [angularjs-url]: https://angularjs.org/
 [requirejs-url]: http://www.requirejs.org/
 [DI-url]: http://en.wikipedia.org/wiki/Dependency_injection
 [ngRoute-url]: https://docs.angularjs.org/api/ngRoute
+[inlineannotation-url]: https://docs.angularjs.org/guide/di#inline-array-annotation
+[ngController-url]: https://docs.angularjs.org/guide/controller
+[factory-url]: https://docs.angularjs.org/guide/providers#factory-recipe
+[service-url]: https://docs.angularjs.org/guide/providers#service-recipe
