@@ -1,1 +1,8 @@
+#docs
 _site/
+
+#bower
+bower_components/
+
+#css
+css/

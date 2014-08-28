@@ -101,15 +101,40 @@ Let's start going through the solution:
             paths: {
                 'fw': 'js/fw',
                 'features': 'js/features',
-                'common': 'js/features/common'
-                //configure the path
+                'common': 'js/features/common',
+                'jquery': 'bower_components/jquery/dist/jquery.min',
+                'angular': 'bower_components/angular/angular.min',
+                'angular-route': 'bower_components/angular-route/angular-route.min',
+                'lodash': 'bower_components/lodash/dist/lodash.min',
+                'bootstrap': 'bower_components/bootstrap/dist/js/bootstrap.min'
+            },
+            shim: {
+                'jquery': {
+                    exports: '$'
+                },
+                'lodash': {
+                    exports: '_'
+                },
+                'angular': {
+                    deps: ['lodash', 'jquery']
+                },
+                'angular-route': {
+                    deps: ['angular']
+                },
+                'bootstrap': {
+                    deps: ['jquery']
+                }
             }
             //anything else, place it here if you need
         });
 
-        var preloads = [];//place the paths you'd like to load before 
-                          //application started, such as jquery, lodash
-                          //angularjs and all the external angular modules
+        //place the paths you'd like to load before application
+        //started, such as jquery, lodash angularjs and all 
+        //the external angular modules
+        var preloads = [
+            'angular-route',
+            'bootstrap'
+            ];
         
         require(preloads, function() {
             
@@ -129,9 +154,7 @@ Let's start going through the solution:
         //specify each configure module, feature module here explicitly
         define([
             'fw/RouteConfig',
-            'fw/TranslateConfig',
             'common/arstopnav/main',
-            'common/arsbottomnav/main',
             'features/todo/main',
             'features/about/main'
         ], function() {
@@ -143,7 +166,8 @@ Let's start going through the solution:
                 });
 
                 //specify any external angular dependency here
-                var ngDependencies = ['ngRoute', 'pascalprecht.translate'];
+                //like 'ngRoute', 'pascalprecht.translate', 'ngTouch'
+                var ngDependencies = ['ngRoute'];
                 
                 //each feature returns a literal object include a feature name
                 //and any other attribute if needed
@@ -154,13 +178,16 @@ Let's start going through the solution:
                 });
                 
                 //config modules are the files written in special form
-                //under 'fw' folder
+                //under 'fw' folder, i will explain what the special form
+                //is in later section
                 var configModules = _.filter(modules, function(module) {
                     return angular.isFunction(module);
                 });
 
+                //create application module
                 var app = angular.module(appName, ngDependencies);
 
+                //config application with each config module
                 for (var i = 0; i < configModules.length; i++) {
                     var module = configModules[i];
                     module(features, app);
@@ -179,7 +206,7 @@ Now, everything should work smoothly. Let's take one step further.
 
 <h2 id="configuration"><a href="#configuration">How a configuration module looks like?</a></h2>
 
-Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example:
+Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig` collect route information from each feature, and config them with [ngRoute][ngRoute-url]:
 
 ```JavaScript
 (function(define) {
@@ -323,3 +350,4 @@ Let's start writing a feature:
 [angularjs-url]: https://angularjs.org/
 [requirejs-url]: http://www.requirejs.org/
 [DI-url]: http://en.wikipedia.org/wiki/Dependency_injection
+[ngRoute-url]: https://docs.angularjs.org/api/ngRoute
