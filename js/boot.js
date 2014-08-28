@@ -4,6 +4,7 @@
     //specify each configure module, feature module here explicitly
     define([
         'fw/RouteConfig',
+        'common/arsmodal/main',
         'common/arstopnav/main',
         'features/about/main',
         'features/todo/main'

@@ -8,12 +8,15 @@
         var modulename = 'arsTopnav';
         var module = angular.module(modulename, []);
 
-        var arsTopnav = function($rootScope) {
+        var arsTopnav = function($rootScope, $location) {
 
             // Return configured, directive instance
             return {
                 restrict: 'E',
                 link: function($scope, element, attrs) {
+                    $rootScope.$on('$routeChangeSuccess', function() {
+                        $scope.url = $location.url().slice(1);
+                    });
                     $scope.url = '';
                     $scope.switchTo = function(url) {
                         $scope.url = url;
@@ -24,7 +27,7 @@
         };
 
         //Register navbar directive
-        module.directive(modulename, ['$rootScope', arsTopnav]);
+        module.directive(modulename, ['$rootScope', '$location', arsTopnav]);
 
 
         return {
