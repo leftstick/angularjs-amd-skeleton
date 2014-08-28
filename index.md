@@ -445,6 +445,8 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
 
 > For more reading, refer to: [service][service-url]
 
+This seek project doesn't require you to use any of above code in your project. The only thing i want to share is how i organize files for a large project. Feel free to replace the `RouterConfig` for [ngRoute][ngRoute-url] with any other `route` technology such as [ui-router][uiRouter-url], it just shows the way to write a `configure` module.
+
 
 
 ### [Now it's time to play with the real code!]({{ site.git_repository }}) ###
@@ -455,6 +457,7 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
 [requirejs-url]: http://www.requirejs.org/
 [DI-url]: http://en.wikipedia.org/wiki/Dependency_injection
 [ngRoute-url]: https://docs.angularjs.org/api/ngRoute
+[uiRouter-url]: https://github.com/angular-ui/ui-router/
 [inlineannotation-url]: https://docs.angularjs.org/guide/di#inline-array-annotation
 [ngController-url]: https://docs.angularjs.org/guide/controller
 [factory-url]: https://docs.angularjs.org/guide/providers#factory-recipe
