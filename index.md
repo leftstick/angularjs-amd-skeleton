@@ -37,11 +37,11 @@ A complete seed project is provided. Welcome to give a try, and register issues 
 - **img:** just like what you saw, place images here
 - **js:** all `JavaScript` files should be placed here
 - **js-features:** business logic code should be placed here
-- **js-features-common:** common stuff would be used for most features should be placed here
+- **js-features-common:** common stuff would be used for most features
 - **js-features-feaure:** each feature might contain the `controller`, `service`, `directive`, `route` and even `i18n` assets
-- **fw:** framework-level folder, if you need something to be ready in [angularjs][angularjs-url]'s configure phase, write a [configuration](#configuration) module and import it in [boot.js](#bootjs)
+- **fw:** framework-level folder, if you need something to be ready in [angularjs][angularjs-url]'s [configure phase][configphase-url], write a [configuration](#configuration) module and import it in [boot.js](#bootjs)
 - [boot.js](#bootjs): is responsible for organizing all the needed modules
-- [main.js](#mainjs): is the main entrance of the whole application, which is a configuration module for `requirejs`. The `requirejs` related stuff such `path`, `shim` configurations should be in it
+- [main.js](#mainjs): is the main entrance of the whole application, which is a configuration module for [requirejs][requirejs-url]. The [requirejs][requirejs-url] related stuff such `path`, `shim` configurations should be in it
 
 <h2 id="major-issue"><a href="#major-issue">Major Issue</a></h2>
 
@@ -462,3 +462,4 @@ This seek project doesn't require you to use any of above code in your project. 
 [ngController-url]: https://docs.angularjs.org/guide/controller
 [factory-url]: https://docs.angularjs.org/guide/providers#factory-recipe
 [service-url]: https://docs.angularjs.org/guide/providers#service-recipe
+[configphase-url]: https://docs.angularjs.org/guide/providers#providers_provider-recipe
