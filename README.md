@@ -11,9 +11,11 @@ For detail explanation of the project, please refer to [documentation][doc-url]
 
 ## This skeleton is playable, follow below steps to run it locally ##
 
-- Install [Nodejs][node-url]
-- Install [sero-cli][sero-url]
+- Install [Nodejs][node-url]. (Ignore if you have it installed)
+- Install [sero-cli][sero-url] globally
+- Install [bower][bower-url] globally
 - Move to `angularjs-requirejs-skeleton` folder
+- Execute `bower install` to install bower dependencies
 - Execute `sero` to launch a terminal-ui
 - Choose the fourth item 'Start a static web server for current working directory', press `Enter`
 - Use default value for every question it required
@@ -23,7 +25,7 @@ For detail explanation of the project, please refer to [documentation][doc-url]
 
 ## Try the compressed version ##
 
-- Install [Nodejs][node-url]
+- Install [Nodejs][node-url]. (Ignore if you have it installed)
 - Install [gulp][gulp-url] globally
 - Move to `angularjs-requirejs-skeleton` folder
 - Execute `npm install` to install npm dependencies
@@ -50,3 +52,4 @@ You would find there are two `js` files left in `build/js/` folder, `main.js`, `
 [node-url]: http://nodejs.org
 [gulp-url]: https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md#1-install-gulp-globally
 [sero-url]: https://github.com/leftstick/Sero-cli
+[bower-url]: http://bower.io/

@@ -1,5 +1,5 @@
-(function(define) {
-    "use strict";
+(function(define, _) {
+    'use strict';
 
     define([], function() {
 
@@ -19,14 +19,11 @@
                     var routes = [];
 
                     //retrieve router from each feature
-                    _.each(features, function(feature) {
-                        if (!feature.routes) {
-                            return;
-                        }
-                        _.each(feature.routes, function(route) {
-                            routes.push(route);
-                        });
-                    });
+                    routes = _.chain(features)
+                        .filter('routes')
+                        .pluck('routes')
+                        .flatten()
+                        .value();
 
                     //config each router
                     _.each(routes, function(route) {
@@ -56,4 +53,4 @@
 
     });
 
-}(define));
+}(define, _));

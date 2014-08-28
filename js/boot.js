@@ -12,26 +12,18 @@
 
             var appName = 'angularjs-requirejs-skeleton';
             var modules = Array.prototype.slice.call(arguments, 0);
-            var features = _.filter(modules, function(module) {
-                return angular.isObject(module) && module.name;
-            });
+
+            var features = _.chain(modules).filter(angular.isObject).filter('name').value();
 
             //specify any external angular dependency here
             var ngDependencies = ['ngRoute'];
 
-            //each feature returns a literal object include a feature name
-            //and any other attribute if needed
-            _.each(features, function(module) {
-                if (module.name) {
-                    ngDependencies.push(module.name);
-                }
-            });
+            //each feature should return a literal object include feature name
+            ngDependencies = _.chain(features).filter('name').pluck('name').value().concat(ngDependencies);
 
             //config modules are the files written in special form
             //under 'fw' folder
-            var configModules = _.filter(modules, function(module) {
-                return angular.isFunction(module);
-            });
+            var configModules = _.filter(modules, angular.isFunction);
 
             var app = angular.module(appName, ngDependencies);
 
