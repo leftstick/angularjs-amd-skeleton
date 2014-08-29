@@ -1,7 +1,7 @@
 (function(define) {
     "use strict";
 
-    define([], function(Router) {
+    define([], function() {
 
         var AboutController = function($scope, $rootScope, $timeout) {
             $scope.words = 'This is standard angular controller';
