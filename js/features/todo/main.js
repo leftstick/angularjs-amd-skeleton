@@ -2,10 +2,12 @@
     'use strict';
 
     define([
+        'angular',
         'features/todo/router/Routes',
         'features/todo/controller/TodoController',
         'features/todo/service/TodoFactory'
-    ], function(Routes,
+    ], function(angular,
+        Routes,
         TodoController,
         TodoFactory) {
 

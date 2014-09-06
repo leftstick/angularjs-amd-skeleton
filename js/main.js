@@ -1,4 +1,5 @@
 (function(require) {
+    'use strict';
 
     var baseUrl = '/';
 
@@ -22,6 +23,7 @@
                 exports: '_'
             },
             'angular': {
+                exports: 'angular',
                 deps: ['lodash', 'jquery']
             },
             'angular-route': {
@@ -33,17 +35,6 @@
         }
     });
 
-
-
-    var preLoads = [
-        'angular-route',
-        'bootstrap'
-    ];
-
-    require(preLoads, function() {
-
-        require(['js/boot']);
-
-    });
+    require(['js/boot']);
 
 }(require));

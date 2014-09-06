@@ -1,9 +1,9 @@
 (function(define, require) {
-    "use strict";
+    'use strict';
 
     var baseUrl = require.toUrl('common');
 
-    define([], function() {
+    define(['angular'], function(angular) {
 
         var modulename = 'arsTopnav';
         var module = angular.module(modulename, []);
@@ -13,7 +13,7 @@
             // Return configured, directive instance
             return {
                 restrict: 'E',
-                link: function($scope, element, attrs) {
+                link: function($scope) {
                     $rootScope.$on('$routeChangeSuccess', function() {
                         $scope.url = $location.url().slice(1);
                     });

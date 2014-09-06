@@ -1,7 +1,7 @@
-(function(define, _) {
-    "use strict";
+(function(define) {
+    'use strict';
 
-    define([], function(Router) {
+    define(['lodash'], function(_) {
 
         var TodoController = function($scope, TodoFactory) {
             $scope.finNum = 0;
@@ -38,5 +38,4 @@
 
     });
 
-
-})(define, _);
+})(define);

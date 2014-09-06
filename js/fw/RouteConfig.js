@@ -1,7 +1,7 @@
-(function(define, _) {
+(function(define) {
     'use strict';
 
-    define([], function() {
+    define(['lodash'], function(_) {
 
         //only one function needs to be implemented
         //and it will be invoked with two arguments
@@ -19,11 +19,14 @@
                     var routes = [];
 
                     //retrieve router from each feature
-                    routes = _.chain(features)
-                        .filter('routes')
-                        .pluck('routes')
-                        .flatten()
-                        .value();
+                    _.each(features, function(feature) {
+                        if (!feature.routes) {
+                            return;
+                        }
+                        _.each(feature.routes, function(route) {
+                            routes.push(route);
+                        });
+                    });
 
                     //config each router
                     _.each(routes, function(route) {
@@ -35,7 +38,9 @@
                     });
 
                     //config default page
-                    var defaultRouter = _.find(routes, 'isDefault');
+                    var defaultRouter = _.find(routes, {
+                        'isDefault': true
+                    });
                     if (defaultRouter) {
                         $routeProvider.otherwise({
                             redirectTo: defaultRouter.when
@@ -47,8 +52,11 @@
 
         };
 
-        return config;
+        return {
+            type: 'config',
+            func: config
+        };
 
     });
 
-}(define, _));
+}(define));

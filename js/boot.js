@@ -1,8 +1,12 @@
-(function(define, _, angular) {
+(function(define) {
     'use strict';
 
     //specify each configure module, feature module here explicitly
     define([
+        'angular',
+        'lodash',
+        'angular-route',
+        'bootstrap',
         'fw/RouteConfig',
         'common/arsmodal/main',
         'common/arstopnav/main',
@@ -13,23 +17,30 @@
             var appName = 'angularjs-requirejs-skeleton';
             var modules = Array.prototype.slice.call(arguments, 0);
 
-            var features = _.chain(modules).filter(angular.isObject).filter('name').value();
+            var angular = modules[0];
+            var _ = modules[1];
+
+            var features = _.filter(modules, function(mod) {
+                return angular.isObject(mod) && mod.name;
+            });
 
             //specify any external angular dependency here
             var ngDependencies = ['ngRoute'];
 
             //each feature should return a literal object include feature name
-            ngDependencies = _.chain(features).filter('name').pluck('name').value().concat(ngDependencies);
+            Array.prototype.push.apply(ngDependencies, _.pluck(features, 'name'));
 
             //config modules are the files written in special form
             //under 'fw' folder
-            var configModules = _.filter(modules, angular.isFunction);
+            var configModules = _.filter(modules, function(mod) {
+                return angular.isObject(mod) && mod.type === 'config' && angular.isFunction(mod.func);
+            });
 
             var app = angular.module(appName, ngDependencies);
 
             for (var i = 0; i < configModules.length; i++) {
                 var module = configModules[i];
-                module(features, app);
+                module.func(features, app);
             }
 
             //fire up the application manually in angular way
@@ -38,4 +49,4 @@
             return app;
         });
 
-}(define, _, angular));
+}(define));

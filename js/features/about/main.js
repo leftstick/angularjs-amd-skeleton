@@ -2,9 +2,11 @@
     'use strict';
 
     define([
+        'angular',
         'features/about/router/Routes',
         'features/about/controller/AboutController'
-    ], function(Routes,
+    ], function(angular,
+        Routes,
         AboutController) {
 
             var moduleName = 'about';
