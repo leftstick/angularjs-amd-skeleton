@@ -116,6 +116,7 @@ Let's start going through the solution:
                     exports: '_'
                 },
                 'angular': {
+                    exports: 'angular',
                     deps: ['lodash', 'jquery']
                 },
                 'angular-route': {
@@ -127,32 +128,24 @@ Let's start going through the solution:
             }
             //anything else, place it here if you need
         });
-
-        //place the paths you'd like to load before application
-        //started, such as jquery, lodash angularjs and all 
-        //the external angular modules
-        var preloads = [
-            'angular-route',
-            'bootstrap'
-            ];
-        
-        require(preloads, function() {
             
-            //load boot.js to fire up the whole application
-            require(['js/boot']);
-
-        });
+        //load boot.js to fire up the whole application
+        require(['js/boot']);
 
     }(require));
     ```
 3. <a href="#bootjs"><code id="bootjs">boot.js</code></a>
 
     ```JavaScript
-    (function(define, _, angular) {
+    (function(define) {
         'use strict';
 
         //specify each configure module, feature module here explicitly
         define([
+            'angular',
+            'lodash',
+            'angular-route',
+            'bootstrap',
             'fw/RouteConfig',
             'common/arstopnav/main',
             'features/todo/main',
@@ -162,23 +155,30 @@ Let's start going through the solution:
                 var appName = 'angularjs-requirejs-skeleton';
                 var modules = Array.prototype.slice.call(arguments, 0);
 
-                var features = _.chain(modules).filter(angular.isObject).filter('name').value();
+                var angular = modules[0];
+                var _ = modules[1];
+
+                var features = _.filter(modules, function(mod) {
+                    return angular.isObject(mod) && mod.name;
+                });
 
                 //specify any external angular dependency here
                 var ngDependencies = ['ngRoute'];
 
                 //each feature should return a literal object include feature name
-                ngDependencies = _.chain(features).filter('name').pluck('name').value().concat(ngDependencies);
+                Array.prototype.push.apply(ngDependencies, _.pluck(features, 'name'));
 
                 //config modules are the files written in special form
                 //under 'fw' folder
-                var configModules = _.filter(modules, angular.isFunction);
+                var configModules = _.filter(modules, function(mod) {
+                    return angular.isObject(mod) && mod.type === 'config' && angular.isFunction(mod.func);
+                });
 
                 var app = angular.module(appName, ngDependencies);
 
                 for (var i = 0; i < configModules.length; i++) {
                     var module = configModules[i];
-                    module(features, app);
+                    module.func(features, app);
                 }
 
                 //fire up the application manually in angular way
@@ -187,7 +187,7 @@ Let's start going through the solution:
                 return app;
             });
 
-    }(define, _, angular));
+    }(define));
     ```
 
 Now, everything should work smoothly. Let's take one step further.
@@ -198,9 +198,9 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
 
 ```JavaScript
 (function(define) {
-    "use strict";
+    'use strict';
 
-    define([], function() {
+    define(['lodash'], function(_) {
         
         //only one function needs to be implemented
         //and it will be invoked with two arguments
@@ -218,11 +218,14 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
                     var routes = [];
 
                     //retrieve router from each feature
-                    routes = _.chain(features)
-                        .filter('routes')
-                        .pluck('routes')
-                        .flatten()
-                        .value();
+                    _.each(features, function(feature) {
+                        if (!feature.routes) {
+                            return;
+                        }
+                        _.each(feature.routes, function(route) {
+                            routes.push(route);
+                        });
+                    });
 
                     //config each router
                     _.each(routes, function(route) {
@@ -234,7 +237,9 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
                     });
 
                     //config default page
-                    var defaultRouter = _.find(routes, 'isDefault');
+                    var defaultRouter = _.find(routes, {
+                        'isDefault': true
+                    });
                     if (defaultRouter) {
                         $routeProvider.otherwise({
                             redirectTo: defaultRouter.when
@@ -243,13 +248,13 @@ Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig
 
                 }
             ]);
-
         };
 
-        return config;
-
+        return {
+            type: 'config',
+            func: config
+        };
     });
-
 }(define));
 ```
 <h2 id="feature"><a href="#feature">What is a feature?</a></h2>
@@ -292,10 +297,12 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
     'use strict';
 
     define([
+        'angular',
         'features/todo/router/Routes',
         'features/todo/controller/TodoController',
         'features/todo/service/TodoFactory'
-    ], function(Routes,
+    ], function(angular,
+       Routes,
        TodoController,
        TodoFactory) {
 
@@ -352,10 +359,10 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
 <h3 id="writecontroller"><a href="#writecontroller">Writting a Controller</a></h3>
 
 ```JavaScript
-(function(define, _) {
-    "use strict";
+(function(define) {
+    'use strict';
 
-    define([], function() {
+    define(['lodash'], function(_) {
 
         var TodoController = function($scope, TodoFactory) {
             $scope.title = 'TODOLIST';
@@ -377,7 +384,7 @@ A feature is a [angularjs][angularjs-url] module, it has only one mission which 
 
     });
 
-})(define, _);
+})(define);
 ```
 
 > The `controller` is just as it should be, explained in [ngController][ngController-url]
