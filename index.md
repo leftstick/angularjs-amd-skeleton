@@ -77,10 +77,7 @@ Let's start going through the solution:
     <!DOCTYPE html>
     <html>
         <head>
-            <title>DEMO</title>
-            <meta charset="utf-8" />
-            <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-            <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+            <title></title>
             <script type="text/javascript" data-main="js/main" src="bower_components/requirejs/require.js"></script>
         </head>
         <body>
@@ -100,13 +97,20 @@ Let's start going through the solution:
             baseUrl: baseUrl,
             paths: {
                 'fw': 'js/fw',
+                'conf': 'js/fw/conf',
+                'libs': 'js/fw/libs',
+                'utils': 'js/utils',
                 'features': 'js/features',
                 'common': 'js/features/common',
                 'jquery': 'bower_components/jquery/dist/jquery.min',
                 'angular': 'bower_components/angular/angular.min',
                 'angular-route': 'bower_components/angular-route/angular-route.min',
                 'lodash': 'bower_components/lodash/dist/lodash.min',
-                'bootstrap': 'bower_components/bootstrap/dist/js/bootstrap.min'
+                'bootstrap': 'bower_components/bootstrap/dist/js/bootstrap.min',
+                'bootstrapcss': 'bower_components/bootstrap/dist/css/bootstrap.min',
+                'bootstraptheme': 'bower_components/bootstrap/dist/css/bootstrap-theme.min',
+                'maincss': 'css/main',
+                'require-css': 'bower_components/require-css/css.min'
             },
             shim: {
                 'jquery': {
@@ -124,6 +128,17 @@ Let's start going through the solution:
                 },
                 'bootstrap': {
                     deps: ['jquery']
+                },
+                'maincss': {
+                    deps: ['bootstraptheme']
+                },
+                'bootstraptheme': {
+                    deps: ['bootstrapcss']
+                }
+            },
+            map: {
+                '*': {
+                    'css': 'require-css'
                 }
             }
             //anything else, place it here if you need
@@ -144,12 +159,17 @@ Let's start going through the solution:
         define([
             'angular',
             'lodash',
+            'css!bootstrapcss',
+            'css!bootstraptheme',
+            'css!maincss',
             'angular-route',
             'bootstrap',
-            'fw/RouteConfig',
+            'conf/RouteConfig',
+            'conf/HeadConfig',
+            'common/arsmodal/main',
             'common/arstopnav/main',
-            'features/todo/main',
-            'features/about/main'
+            'features/about/main',
+            'features/todo/main'
         ], function() {
 
                 var appName = 'angularjs-requirejs-skeleton';
@@ -194,7 +214,7 @@ Now, everything should work smoothly. Let's take one step further.
 
 <h2 id="configuration"><a href="#configuration">How a configuration module looks like?</a></h2>
 
-Let's take the `fw/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig` collect route information from each feature, and config them with [ngRoute][ngRoute-url]:
+Let's take the `fw/conf/RouteConfig` from [boot.js](#bootjs) as example, `RouteConfig` collect route information from each feature, and config them with [ngRoute][ngRoute-url]:
 
 ```JavaScript
 (function(define) {
