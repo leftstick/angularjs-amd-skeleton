@@ -1,4 +1,4 @@
-(function() {
+(function(document) {
 
     'use strict';
 
@@ -39,4 +39,4 @@
         };
     });
 
-}());
+}(document));
