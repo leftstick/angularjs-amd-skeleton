@@ -20,8 +20,6 @@ gulp.task('clean', function() {
 gulp.task('compress', ['clean'], function(cb) {
     var html = gulp.src(['index.html'])
         .pipe(gulp.dest('build/'));
-    var css = gulp.src(['css/*'])
-        .pipe(gulp.dest('build/css/'));
     var img = gulp.src(['img/*'])
         .pipe(gulp.dest('build/img/'));
     var js = gulp.src(['js/**/*.html', 'js/main.js'])
@@ -35,7 +33,7 @@ gulp.task('compress', ['clean'], function(cb) {
         .pipe(gulp.dest('build/bower_components/'));
 
 
-    var merged = merge(html, css, img, js);
+    var merged = merge(html, img, js);
 
     merged.on('end', function() {
         var cmd = isWin() ? 'r.js.cmd' : 'r.js';
