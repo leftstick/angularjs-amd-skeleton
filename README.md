@@ -1,3 +1,5 @@
+> This is really the old style, and should be deprecated. If you are interested in this topic, please refer to [generator-require-angular](https://github.com/leftstick/generator-require-angular)
+
 angularjs-requirejs-skeleton
 ============================
 
