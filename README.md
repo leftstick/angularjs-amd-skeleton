@@ -1,5 +1,3 @@
-> This is really the old style, and deprecated. If you are interested in this topic, please refer to [generator-amd-angular](https://github.com/leftstick/generator-amd-angular)
-
 angularjs-amd-skeleton
 ============================
 
