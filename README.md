@@ -6,7 +6,7 @@ A seed project can be forked for web-developer. You would learn how `angularjs` 
 This seed project is powered by [generator-amd-angular](https://github.com/leftstick/generator-amd-angular)
 
 
-## This skeleton is playable, follow below steps to run it locally ##
+## This skeleton is playable, give following steps to run it locally ##
 
 - Install [Nodejs][node-url]. (Ignore if you have it installed)
 - Install [gulp][gulp-url] globally
