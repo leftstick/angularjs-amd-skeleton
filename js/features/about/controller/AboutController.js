@@ -1,26 +1,41 @@
+/**
+ *  Defines the AboutController controller
+ *
+ *  @author  haozuo
+ *  @date    Oct 13, 2015
+ *
+ */
 (function(define) {
-    "use strict";
-
+    'use strict';
+    /**
+     * Register the AboutController class with RequireJS
+     */
     define([], function() {
 
-        var AboutController = function($scope, $rootScope, $timeout) {
-            $scope.words = 'This is standard angular controller';
-            $scope.showModal = function() {
-                var opts = {
-                    onClose: function() {
-                        $scope.closingMsg = 'Modal is closed......';
-                        $timeout(function() {
-                            $scope.closingMsg = '';
-                        }, 2000);
-                    }
-                };
-                $rootScope.modal(opts);
-            };
+        /**
+         * @constructor
+         */
+        var AboutController = function($scope, AboutService, events) {
+
+
+            $scope.showSpinner = true;
+
+            AboutService.getDemoList()
+                .success(function(data) {
+                    $scope.showSpinner = false;
+                    $scope.originDemolist = data;
+                    $scope.demolist = [].concat($scope.originDemolist);
+                }).error(function(err) {
+                    events.emit('error', {
+                        content: err
+                    });
+                });
+
+            $scope.$on('$destroy', function() {});
         };
 
-        return ['$scope', '$rootScope', '$timeout', AboutController];
+        return ['$scope', 'AboutService', 'events', AboutController];
 
     });
-
 
 })(define);

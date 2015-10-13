@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-        <script type="text/javascript" data-main="js/main" src="bower_components/requirejs/require.js"></script>
-    </head>
-    <body>
-        <ars-modal></ars-modal>
-
-        <ars-topnav></ars-topnav>
-
-        <div ng-view></div>
-
-        <ars-bottomnav></ars-bottomnav>
-
-    </body>
+<html lang="en">
+<head><link rel="shortcut icon" type="image/ico" href="img/favicon.ico" /></head>
+<body>
+    <div ng-view autoscroll="true" class="main"></div>
+    <script type="text/javascript" src="etc/config.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/common.bundle.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/index.bundle.js" charset="utf-8"></script>
+</body>
 </html>

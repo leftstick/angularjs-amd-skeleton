@@ -1,48 +1,58 @@
 'use strict';
 
 var gulp = require('gulp');
-var clean = require('gulp-clean');
-var fs = require('fs');
-var merge = require('merge-stream');
-var exec = require('child_process').exec;
+var gutil = require('gulp-util');
+var webpack = require('webpack');
 
-var isWin = function() {
-    return process.platform === 'win32';
-};
+gulp.task('release', function(callback) {
+    var path = require('path');
+    var replace = require('gulp-replace');
+    var config = require('./webpack.config');
 
+    require('rimraf').sync('build/');
 
-gulp.task('clean', function() {
-    return gulp.src('build/', {
-        raad: false
-    }).pipe(clean());
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
+    }));
+
+    gulp.src(['img/*', 'etc/*', 'mock/*'], {'base': '.'})
+        .pipe(gulp.dest('build/'));
+
+    webpack(config, function(err, stats) {
+        if (err) {
+            throw new gutil.PluginError('webpack', err);
+        }
+        gutil.log('[webpack]', stats.toString());
+        gulp.src(['index.html'], {'base': '.'})
+            .pipe(replace('common.bundle.js', stats.hash + '.common.bundle.js'))
+            .pipe(replace('index.bundle.js', stats.hash + '.index.bundle.js'))
+            .pipe(gulp.dest('build/'))
+            .on('end', callback);
+    });
 });
 
-gulp.task('compress', ['clean'], function(cb) {
-    var html = gulp.src(['index.html'])
-        .pipe(gulp.dest('build/'));
-    var img = gulp.src(['img/*'])
-        .pipe(gulp.dest('build/img/'));
-    var js = gulp.src(['js/**/*.html', 'js/main.js'])
-        .pipe(gulp.dest('build/js/'));
-    var bower = gulp.src(['bower_components/**/*.min.js',
-        'bower_components/**/*.map',
-        'bower_components/**/*.min.css',
-        'bower_components/**/fonts/*',
-        'bower_components/**/require.js'
-    ])
-        .pipe(gulp.dest('build/bower_components/'));
 
+gulp.task('dev', function(callback) {
+    var WebpackDevServer = require('webpack-dev-server');
+    var config = require('./webpack.config');
+    config.devtool = 'sourcemap';
+    config.debug = true;
+    config.output.filename = config.output.filename.replace(/\[hash\]\./, '');
+    config.output.chunkFilename = config.output.chunkFilename.replace(/\[hash\]\./, '');
 
-    var merged = merge(html, img, js);
+    config.plugins.pop();
+    config.plugins.push(new webpack.optimize.CommonsChunkPlugin('common.bundle.js'));
 
-    merged.on('end', function() {
-        var cmd = isWin() ? 'r.js.cmd' : 'r.js';
-
-        var cp = exec(cmd + ' -o build.json', {
-            maxBuffer: 5000 * 1024
-        }, cb);
-
-        cp.stdout.pipe(process.stdout);
-        cp.stderr.pipe(process.stderr);
+    new WebpackDevServer(webpack(config), {
+        historyApiFallback: true,
+        publicPath: '/js/'
+    }).listen(8080, 'localhost', function(err) {
+        if (err) {
+            throw new gutil.PluginError('webpack-dev-server', err);
+        }
+        // Server listening
+        gutil.log('[webpack-dev-server]', 'http://localhost:8080/webpack-dev-server/index.html');
     });
 });

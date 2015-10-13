@@ -1,28 +1,59 @@
 {
-  "name": "angularjs-requirejs-skeleton",
+  "name": "angularjs-amd-skeleton",
   "version": "1.0.0",
   "description": "A seed project can be forked for web-developer. You would learn how `angularjs` used for organizing complicated application",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leftstick/angularjs-requirejs-skeleton.git"
+    "url": "https://github.com/leftstick/angularjs-amd-skeleton.git"
   },
-  "scripts": {
-    "compress": "gulp compress"
+  "bugs": {
+    "url": "https://github.com/leftstick/angularjs-amd-skeleton/issues"
   },
+  "homepage": "https://github.com/leftstick/angularjs-amd-skeleton",
+  "files": [
+    "etc",
+    "img",
+    "js",
+    "less",
+    "mock",
+    "index.html",
+    "webpack.config.js"
+  ],
   "keywords": [
-    "seed",
-    "angularjs",
-    "requirejs"
+      "amd", "angularjs", "skeleton"
   ],
   "author": "Howard.Zuo",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/leftstick/angularjs-requirejs-skeleton/issues"
+  "dependencies":{
+    "lodash": "3.10.1",
+    "angular": "1.4.5",
+    "angular-animate": "1.4.5",
+    "angular-route": "1.4.5",
+    "angular-sanitize": "1.4.5",
+    "angular-sweetnotifier": "2.0.3",
+    "angular-strap": "2.3.1",
+    "angular-theme-spinner": "1.2.2",
+    "angular-smart-table": "2.1.3",
+    "angular-motion": "0.4.2",
+    "splash-screen": "2.2.1",
+    "bootstrap": "3.3.5",
+    "bootstrap-additions": "0.3.1"
   },
-  "homepage": "https://github.com/leftstick/angularjs-requirejs-skeleton",
   "devDependencies": {
-    "gulp": "^3.8.7",
-    "gulp-clean": "^0.3.1",
-    "merge-stream": "^0.1.5"
+    "babel-core": "^5.8.24",
+    "babel-loader": "^5.3.2",
+    "css-loader": "^0.18.0",
+    "json-loader": "^0.5.2",
+    "less-loader": "^2.2.0",
+    "autoprefixer-loader": "3.1.0",
+    "file-loader": "0.8.4",
+    "raw-loader": "0.5.1",
+    "style-loader": "^0.12.3",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.6",
+    "gulp-replace": "^0.5.4",
+    "webpack": "^1.12.1",
+    "webpack-dev-server": "^1.10.1",
+    "rimraf": "^2.4.3"
   }
 }

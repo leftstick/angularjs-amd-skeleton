@@ -1,7 +1,7 @@
 /**
  * ******************************************************************************************************
  *
- *   Defines a about feature
+ *   Defines a home feature
  *
  *  @author  haozuo
  *  @date    Oct 13, 2015
@@ -14,15 +14,17 @@
     define([
         'lib/FeatureBase',
         './Routes',
-        './controller/AboutController',
-        './service/AboutService'
+        './controller/HomeController',
+        './service/HomeService',
+        './partials/custom.html'
     ], function(Base,
         Routes,
-        AboutController,
-        AboutService) {
+        HomeController,
+        HomeService,
+        customTpl) {
 
         var Feature = function() {
-            Base.call(this, 'about');
+            Base.call(this, 'home');
             this.routes = Routes;
         };
 
@@ -31,11 +33,18 @@
         Feature.prototype.constructor = Feature;
 
         Feature.prototype.run = function() {
-            this.mod.controller('AboutController', AboutController);
-            this.mod.service('AboutService', AboutService);
+            this.mod.controller('HomeController', HomeController);
+            this.mod.service('HomeService', HomeService);
+            this.mod.run([
+                '$templateCache',
+                function($templateCache) {
+                    $templateCache.put('customTpl', customTpl);
+                }
+            ]);
         };
 
         return Feature;
+
     });
 
 }(define));
